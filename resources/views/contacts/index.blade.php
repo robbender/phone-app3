@@ -23,6 +23,24 @@
 <body>
     <h1>Contacts</h1>
 
+    <form action="/search" method="POST" role="search">
+        @csrf
+
+    <div class="is-grouped is-pulled-right">
+    <div class="field has-addons">
+        <div class="control is-horizontal">
+          {{-- <input class="input is-large" type="search" placeholder="Find a contact" name="query"> --}}
+          <input type="search" class="form-control" name="query" placeholder="Search" required>
+        </div>
+        <div class="control">
+          <button class="button is-info is-large" type="submit" >
+            Search
+          </button>
+        </div>
+    </div>
+    </div>
+</form>
+
     <div class="modal fade" id="demoModal">
         <div class="modal-dialog">
             <div class="modal-content">

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+
+// use Symfony\Component\Console\Input\Input;
 
 class ContactController extends Controller
 {
@@ -14,7 +17,11 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view ('contacts.index');
+        $contacts = Contact::all();
+
+        // return $contacts;
+
+        return view ('contacts.index', ['contacts' => $contacts]);
     }
 
     /**
@@ -57,7 +64,7 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
-        //
+        return view('contacts.edit', compact('contact'));
     }
 
     /**
@@ -69,7 +76,35 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $contact)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'position' => 'required',
+            'phone' => 'required',
+            // 'picture' => 'required'
+        ]);
+
+        $validator->after(function ($validator) use($contact) {
+            if($validator->errors()->all()){
+                $validator->errors()->add(strval($contact->id), 'Please complete all the sections in this form');
+            }
+        });
+
+        if ($validator->fails()) {
+            return redirect('/contacts')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $contact->update(request(['name', 'position', 'phone', 'image']));
+
+        // $user->name = request('name');
+        // $user->position = request('position');
+        // $user->phone = request('phone');
+
+        // $user->save();
+
+        return redirect('/contacts');
     }
 
     /**
@@ -80,22 +115,24 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        $contact->delete();
+
+        return redirect('/contacts');
     }
 
-    public function search(User $user)
+    public function search(Contact $contact)
     {
 
         $q = Input::get('query');
 
-        $users = User::where('name', 'LIKE', '%' . $q . '%')
+        $contacts = Contact::where('name', 'LIKE', '%' . $q . '%')
             ->orWhere('position', 'LIKE', '%' . $q . '%')
             ->orWhere('phone', 'LIKE', '%' . $q . '%')
             ->get();
 
-        // dd($users);
-        // return $users;
-        return view('users.search', compact('users'));
-
+        // dd($contacts);
+        // return $contacts;
+        return view('contacts.search', ['contacts' => $contacts]);
+        // return view('contacts.search', compact('contacts'));
     }
 }

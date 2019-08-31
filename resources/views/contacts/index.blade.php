@@ -1,29 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
-    </script>
-</head>
-<body>
+@extends('layout')
+
+@section('content')
+
     <h1>Contacts</h1>
 
-    <form action="/search" method="POST" role="search">
+    {{-- <span class="fa fa-search form-control-feedback"></span>
+                <input type="search" class="form-control" name="query" placeholder="Search" required>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#demoModal">Show Modal</button>
+                    <button class="btn btn-success" type="button" data-toggle="modal" data-target="#search"></button>
+                        <span class="text"></span>
+                        <span class="icon"><i class="fas fa-plus"></i></span>
+                    </button>
+                </span> --}}
+
+    {{-- Search form --}}
+    <form action="/search" method="POST" role="search" class="fa fa-search form-control-feedback">
         @csrf
 
     <div class="is-grouped is-pulled-right">
@@ -33,34 +25,19 @@
           <input type="search" class="form-control" name="query" placeholder="Search" required>
         </div>
         <div class="control">
-          <button class="button is-info is-large" type="submit" >
-            Search
+          <button class="btn btn-success" type="submit" data-toggle="modal" data-target="#search">
+                <button class="btn btn-success" type="submit">
+                <span class="text"></span>
+                <span class="icon"><i class="fas fa-plus"></i></span>
           </button>
         </div>
     </div>
     </div>
 </form>
 
-    <div class="modal fade" id="demoModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">Please confirm!</h2>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>This is the modal body, do you like it?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="container">
+{{-- Search Alert Window --}}
+{{-- <div class="container">
         <div class="row">
             <div class="col">
                 <h1>Alerts &amp; Modal</h1>
@@ -84,15 +61,258 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#demoModal">Show Modal</button>
             </div>
         </div>
+    </div> --}}
+
+{{-- Search Modal --}}
+<div class="modal fade" id="search">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Search Results</h2>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                            <p class="subtitle is-size-4 has-text-weight-semibold">
+                                Results:
+                            </p>
+                        @foreach ($contacts as $contact)
+                            <h3>
+                                Name: <a href="/contacts/{{ $contact->id }}">{{ $contact->name }}</a>
+                            </h3>
+                            <p>
+                                Position: {{ $contact->position }}
+                            </p>
+                            <p>
+                                Phone: {{ $contact->phone }}
+                            </p>
+                            <br>
+                            <br>
+
+                        @endforeach
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+                </div>
+            </div>
+        </div>
     </div>
 
+    {{-- Contact Views --}}
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-</body>
+    @foreach ($contacts as $contact)
 
-</html>
+    <div class="container">
+
+    <div class="card">
+        <div class="card-header-title is-size-1">
+            <br>
+
+            <p>
+                <a href="/contacts/{{ $contact->id }}">{{ $contact->name }}</a>
+            </p>
+        </div>
+
+        <div class="card-image">
+             {{-- <img style="width:50%" src="/storage/images/{{ $contact->image }}"> --}}
+            <img src="" alt="">
+
+        </div>
+
+        <div class="card-content">
+
+        <p class="subtitle is-size-4 has-text-weight-semibold">
+            Position:
+            {{ $contact->position }}
+        </p>
+
+        <p class="subtitle is-size-4 has-text-weight-semibold">
+            Phone:
+            {{ $contact->phone }}
+        </p>
+        <div class="field is-grouped is-grouped-right">
+            <div class="row">
+                <div class="col">
+                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit">Edit</button>
+                </div>
+            </div>
+        </div>
+            <form method="POST" action="/contacts/{{ $contact->id }}">
+                @method('DELETE')
+                @csrf
+                <div class="field">
+                    <div class="control">
+                        <button type="submit" class="button is-danger is-medium">Delete</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    <br>
+
+    @endforeach
+
+    <div class="modal fade" id="edit-{{ $contact->id }}" tabindex="-1" role="dialog" aria-labelledby="editLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form method="POST" action="/contacts/{{ $contact->id }}">
+                        @method('PATCH')
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editLabel">Edit Contact</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="field">
+                                <label for="name" class="label">Name</label>
+
+                                <div>
+                                    <input type="text"
+                                        class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                        name="name" placeholder="Name" value="{{ $contact->name }}" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label for="title" class="label">Position</label>
+
+                                <div>
+                                    <input type="text"
+                                        class="form-control {{ $errors->has('position') ? 'is-invalid' : '' }}"
+                                        name="position" placeholder="Position" value="{{ $contact->position }}" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label for="phone" class="label">Phone</label>
+
+                                <div>
+                                    <input type="text"
+                                        class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
+                                        name="phone" placeholder="Phone" value="{{ $contact->phoneNumber }}">
+                                </div>
+                            </div>
+
+                            @if ($errors->any() && $errors->has($contact->id))
+                            <script>
+                            $(document).ready(function() {
+                                $('#edit-{{ $entry->id }}').modal('show');
+                            });
+                            </script>
+
+                            <div class="notification is-invalid">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                    <li class="text-danger">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                onclick="window.location.href = '/entries'">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    {{-- Edit Modal --}}
+    {{-- <div class="modal fade" id="edit">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Please confirm!</h2>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                            <h1 class="title is-size-1">Edit Contact</h1>
+                            <form method="POST" action="/contacts/{{ $contact->id }}">
+                                @method('PATCH')
+                                @csrf
+                                    <div class="field">
+                                        <label class="label" for="name">Name</label>
+                                    <div class="control">
+                                    <input type="text" class="input is-large" name="name" placeholder="Name" value="{{ $contact->name }}">
+                                    </div>
+                                    <div class="field">
+                                        <label class="label" for="position">Position</label>
+                                    <div class="control">
+                                        <input type="text" class="input is-large" name="position" placeholder="Position" value="{{ $contact->position }}" required>
+                                     </div>
+                                     <div class="field">
+                                        <label class="label" for="phone">Phone</label>
+                                    <div class="control">
+                                    <input type="text" class="input is-large" name="phone" placeholder="Phone" value="{{ $contact->phone }}" required>
+                                    </div>
+                                    <br>
+                                    <div class="control">
+
+                                        <input type="file" class="input is-large" name="image" accept="image/png, image/jpeg" placeholder="Image" value="{{ old('position') }}" required> --}}
+                                        {{-- value="{{ $user->image }}" --}}
+                                    {{-- </div>
+                                    <br>
+                                    <div class="field">
+                                        <div class="control">
+                                            <button type="submit" class="button is-info is-large">Update</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+
+    {{-- Demo modal --}}
+    <div class="modal fade" id="demoModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Please confirm!</h2>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This is the modal body, do you like it?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <p class="control">
+        <a href="/users/create" class="button is-info is-pulled-right is-large">New Contact</a>
+    </p>
+    <br>
+    <br>
+    <footer class="footer">
+            <div class="content has-text-centered">
+              <p>
+                <strong>Directory</strong> by <a href="">Web Services</a>.
+                2019
+              </p>
+            </div>
+          </footer>
+
+    @endsection

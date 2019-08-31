@@ -82,4 +82,20 @@ class ContactController extends Controller
     {
         //
     }
+
+    public function search(User $user)
+    {
+
+        $q = Input::get('query');
+
+        $users = User::where('name', 'LIKE', '%' . $q . '%')
+            ->orWhere('position', 'LIKE', '%' . $q . '%')
+            ->orWhere('phone', 'LIKE', '%' . $q . '%')
+            ->get();
+
+        // dd($users);
+        // return $users;
+        return view('users.search', compact('users'));
+
+    }
 }

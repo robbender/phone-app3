@@ -70,7 +70,7 @@ The Laravel framework is open-source software licensed under the [MIT license](h
  `composer install`
 
 ## Copy
-#.env.example and save as .env and put your database info there
+.env.example and save as .env and put your database info there
  `cp .env.example .env`
 
 ## Run

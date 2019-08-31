@@ -156,7 +156,9 @@
 
     @endforeach
 
-    <div class="modal fade" id="edit-{{ $contact->id }}" tabindex="-1" role="dialog" aria-labelledby="editLabel"
+    {{-- Edit Modal --}}
+
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="editLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -164,7 +166,7 @@
                         @method('PATCH')
                         @csrf
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editLabel">Edit Contact</h5>
+                            <h5 class="modal-title" id="edit">Edit Contact</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -201,11 +203,11 @@
                             </div>
 
                             @if ($errors->any() && $errors->has($contact->id))
-                            <script>
+                            {{-- <script>
                             $(document).ready(function() {
                                 $('#edit-{{ $entry->id }}').modal('show');
                             });
-                            </script>
+                            </script> --}}
 
                             <div class="notification is-invalid">
                                 <ul>

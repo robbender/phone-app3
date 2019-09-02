@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 
 // use Symfony\Component\Console\Input\Input;
 
@@ -40,9 +42,26 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
 
+            // Handle File Upload
+        if ($request->hasFile('image')) {
+            // Get filename with the extension
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('image')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
+
+        // Create Contact
         $contact = new Contact();
 
         $contact->name = request('name');
@@ -52,7 +71,7 @@ class ContactController extends Controller
 
         $contact->save();
 
-        return redirect('/contacts');
+        return redirect('/contacts')->with('success', 'Contact Created');
 
         // return request()->all();
         // Contact::create(request()->validate([
@@ -97,24 +116,24 @@ class ContactController extends Controller
     public function update(Request $request, Contact $contact)
     {
 
-        // $validator = Validator::make($request->all(), [
-        //     'name' => 'required',
-        //     'position' => 'required',
-        //     'phone' => 'required',
-        //     // 'picture' => 'required'
-        // ]);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'position' => 'required',
+            'phone' => 'required',
+            // 'picture' => 'required'
+        ]);
 
-        // $validator->after(function ($validator) use($contact) {
-        //     if($validator->errors()->all()){
-        //         $validator->errors()->add(strval($contact->id), 'Please complete all the sections in this form');
-        //     }
-        // });
+        $validator->after(function ($validator) use($contact) {
+            if($validator->errors()->all()){
+                $validator->errors()->add(strval($contact->id), 'Please complete all the sections in this form');
+            }
+        });
 
-        // if ($validator->fails()) {
-        //     return redirect('/contacts')
-        //                 ->withErrors($validator)
-        //                 ->withInput();
-        // }
+        if ($validator->fails()) {
+            return redirect('/contacts')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
 
         $contact->update(request(['name', 'position', 'phone']));
 

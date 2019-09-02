@@ -72,16 +72,6 @@ class ContactController extends Controller
         $contact->save();
 
         return redirect('/contacts')->with('success', 'Contact Created');
-
-        // return request()->all();
-        // Contact::create(request()->validate([
-        //     'name' => ['required', 'min:2', 'max:120'],
-        //     'position' => ['required', 'min:2'],
-        //     'phone' => ['required', 'min:11', 'numeric'],
-        //     // 'image' => ['max:1999'],
-        // ]));
-
-        // Contact::create($attributes);
     }
 
     /**
@@ -103,7 +93,7 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
-        return view('contacts.edit', compact('contact'));
+        return view('contacts.edit', compact('contacts'));
     }
 
     /**
@@ -116,28 +106,7 @@ class ContactController extends Controller
     public function update(Request $request, Contact $contact)
     {
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'position' => 'required',
-            'phone' => 'required',
-            // 'picture' => 'required'
-        ]);
-
-        $validator->after(function ($validator) use($contact) {
-            if($validator->errors()->all()){
-                $validator->errors()->add(strval($contact->id), 'Please complete all the sections in this form');
-            }
-        });
-
-        if ($validator->fails()) {
-            return redirect('/contacts')
-                        ->withErrors($validator)
-                        ->withInput();
-        }
-
         $contact->update(request(['name', 'position', 'phone']));
-
-        // $contact->save();
 
         return redirect('/contacts');
     }

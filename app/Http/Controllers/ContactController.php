@@ -40,9 +40,29 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+
+        $contact = new Contact();
+
+        $contact->name = request('name');
+        $contact->position = request('position');
+        $contact->phone = request('phone');
+        $contact->image = request('image');
+
+        $contact->save();
+
+        return redirect('/contacts');
+
+        // return request()->all();
+        // Contact::create(request()->validate([
+        //     'name' => ['required', 'min:2', 'max:120'],
+        //     'position' => ['required', 'min:2'],
+        //     'phone' => ['required', 'min:11', 'numeric'],
+        //     // 'image' => ['max:1999'],
+        // ]));
+
+        // Contact::create($attributes);
     }
 
     /**
@@ -77,32 +97,28 @@ class ContactController extends Controller
     public function update(Request $request, Contact $contact)
     {
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'position' => 'required',
-            'phone' => 'required',
-            // 'picture' => 'required'
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required',
+        //     'position' => 'required',
+        //     'phone' => 'required',
+        //     // 'picture' => 'required'
+        // ]);
 
-        $validator->after(function ($validator) use($contact) {
-            if($validator->errors()->all()){
-                $validator->errors()->add(strval($contact->id), 'Please complete all the sections in this form');
-            }
-        });
+        // $validator->after(function ($validator) use($contact) {
+        //     if($validator->errors()->all()){
+        //         $validator->errors()->add(strval($contact->id), 'Please complete all the sections in this form');
+        //     }
+        // });
 
-        if ($validator->fails()) {
-            return redirect('/contacts')
-                        ->withErrors($validator)
-                        ->withInput();
-        }
+        // if ($validator->fails()) {
+        //     return redirect('/contacts')
+        //                 ->withErrors($validator)
+        //                 ->withInput();
+        // }
 
-        $contact->update(request(['name', 'position', 'phone', 'image']));
+        $contact->update(request(['name', 'position', 'phone']));
 
-        // $user->name = request('name');
-        // $user->position = request('position');
-        // $user->phone = request('phone');
-
-        // $user->save();
+        // $contact->save();
 
         return redirect('/contacts');
     }
@@ -118,6 +134,7 @@ class ContactController extends Controller
         $contact->delete();
 
         return redirect('/contacts');
+
     }
 
     public function search(Contact $contact)

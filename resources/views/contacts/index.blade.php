@@ -160,7 +160,7 @@
                         @method('PATCH')
                         @csrf
                         <div class="modal-header">
-                            <h5 class="modal-title" id="edit">Edit {{ $contact->name }}</h5>
+                            <h3 class="modal-title" id="edit">Edit: {{ $contact->name }}</h3>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -210,7 +210,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                 {{-- onclick="window.location.href = '/contacts'">Cancel</button> --}}
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
@@ -228,13 +228,13 @@
                             @method('DELETE')
                             @csrf
                             <div class="modal-header">
-                                <h5 class="modal-title" id="deleteLabel">Delete entry</h5>
+                                <h3 class="modal-title" id="deleteLabel">Delete Contact</h3>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                Are you sure you'd like to delete this entry?
+                                Are you sure? This action cannot be undone.
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -278,7 +278,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title">Create New Contact</h2>
+                        <h3 class="modal-title">Create New Contact</h3>
                         <button type="button" class="close" data-dismiss="modal">
                             <span>&times;</span>
                         </button>
@@ -288,21 +288,21 @@
                             <form method="POST" action="/contacts">
                                 @csrf
                                 <div class="field">
-                                    <label class="label" for="name"></label>
+                                    <label class="label" for="name">Name</label>
                                     <div class="control">
-                                    <input type="text" class="input is-large {{ $errors->has('name') ? 'is-danger' : '' }}" name="name" value="{{ old('name') }}" required>
+                                    <input type="text" class="input is-large {{ $errors->has('name') ? 'is-danger' : '' }}" name="name" required>
                                     </div>
                                 </div>
                                 <div class="field">
-                                     <label class="label" type="text" name="position"></label>
+                                     <label class="label" type="text" name="position">Position</label>
                                     <div class="control">
-                                        <input type="text" class="input is-large {{ $errors->has('position') ? 'is-danger' : '' }}" name="position" value="{{ old('position') }}" required>
+                                        <input type="text" class="input is-large {{ $errors->has('position') ? 'is-danger' : '' }}" name="position" required>
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <label class="label is-large" type="text" name="phone"></label>
+                                    <label class="label is-large" type="text" name="phone">Phone</label>
                                     <div class="control">
-                                        <input type="text" class="input is-large {{ $errors->has('phone') ? 'is-danger' : '' }}" name="phone" value="{{ old('phone') }}" required>
+                                        <input type="text" class="input is-large {{ $errors->has('phone') ? 'is-danger' : '' }}" name="phone" required>
                                     </div>
                                 </div>
                                 <div class="field">
@@ -311,11 +311,7 @@
                                         name="image" enctype="multipart/form-data" accept="image/png, image/jpeg" placeholder="Image" required> --}}
                                 </div>
                                 <br>
-                                <div class="field">
-                                    <div class="control">
-                                        <button type="submit" class="button is-info is-medium">Add User</button>
-                                    </div>
-                                </div>
+
                                 @if ($errors->any())
                                 <div class="notification is-danger">
                                     <ul>
@@ -328,8 +324,13 @@
                             </form>
                     </div>
                     <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                             {{-- onclick="window.location.href = '/contacts'">Cancel</button> --}}
+                            <div class="field">
+                                    <div class="control">
+                                        <button type="submit" class="btn btn-primary">Add User</button>
+                                    </div>
+                                </div>
                         {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
                     </div>
                 </div>

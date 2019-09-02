@@ -140,7 +140,7 @@
                 <div class="col">
                     <button
                     type="submit"
-                    class="button is-danger is-medium"
+                    class="btn btn-danger"
                     data-toggle="modal"
                     data-target="#delete-{{ $contact->id }}">Delete</button>
                 </div>

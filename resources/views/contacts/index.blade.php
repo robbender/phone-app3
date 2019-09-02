@@ -53,7 +53,7 @@
     </div> --}}
 
 {{-- Search Modal --}}
-<div class="modal fade" id="search">
+{{-- <div class="modal fade" id="search">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -87,7 +87,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- Contact Views --}}
     @if (count($contacts))
@@ -199,65 +199,13 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="window.location.href = '/entries'">Cancel</button>
+                                {{-- {{-- onclick="window.location.href = '/contacts'">Cancel</button> --}}
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-    {{-- Edit Modal --}}
-    {{-- <div class="modal fade" id="edit">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title">Please confirm!</h2>
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span>&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                            <h1 class="title is-size-1">Edit Contact</h1>
-                            <form method="POST" action="/contacts/{{ $contact->id }}">
-                                @method('PATCH')
-                                @csrf
-                                    <div class="field">
-                                        <label class="label" for="name">Name</label>
-                                    <div class="control">
-                                    <input type="text" class="input is-large" name="name" placeholder="Name" value="{{ $contact->name }}">
-                                    </div>
-                                    <div class="field">
-                                        <label class="label" for="position">Position</label>
-                                    <div class="control">
-                                        <input type="text" class="input is-large" name="position" placeholder="Position" value="{{ $contact->position }}" required>
-                                     </div>
-                                     <div class="field">
-                                        <label class="label" for="phone">Phone</label>
-                                    <div class="control">
-                                    <input type="text" class="input is-large" name="phone" placeholder="Phone" value="{{ $contact->phone }}" required>
-                                    </div>
-                                    <br>
-                                    <div class="control">
-
-                                        <input type="file" class="input is-large" name="image" accept="image/png, image/jpeg" placeholder="Image" value="{{ old('position') }}" required> --}}
-                                        {{-- value="{{ $user->image }}" --}}
-                                    {{-- </div>
-                                    <br>
-                                    <div class="field">
-                                        <div class="control">
-                                            <button type="submit" class="button is-info is-large">Update</button>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Confirm</button>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
 
         {{-- Delete Modal --}}
         <div class="modal modal-danger fade" id="delete-{{ $contact->id }}" tabindex="-1" role="dialog"
@@ -291,12 +239,17 @@
         @endif
 
     <p class="control">
-        <button>
-            <a href="/users/create"
-                class="button is-info is-pulled-right is-large"
+
+            {{-- <button
+            type="submit"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#create-{{ $contact->id }}">Add Contact</button> --}}
+
+        <button class="btn btn-primary"
+                type="submit"
                 data-toggle="modal"
-                data-target="#create-{{ $contact->id }}">New Contact</a>
-        </button>
+                data-target="#create-{{ $contact->id }}">New Contact</button>
     </p>
     <br>
     <br>
@@ -312,7 +265,6 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                            <h1 class="title is-size-1">Create New Contact</h1>
                             <br>
                             <form method="POST" action="/contacts">
                                 @csrf
@@ -334,7 +286,7 @@
                                         <input type="text" class="input is-large {{ $errors->has('phone') ? 'is-danger' : '' }}" name="phone" value="{{ old('phone') }}" required>
                                     </div>
                                 </div>
-                                <div class="field">
+                                <div class="field"> --}}
                                         {{-- <label class="label is-large" type="text" name="image"></label> --}}
                                         <input type="file" class="input is-large {{ $errors->has('image') ? 'is-danger' : '' }}"
                                         name="image" enctype="multipart/form-data" accept="image/png, image/jpeg" placeholder="Image" required>

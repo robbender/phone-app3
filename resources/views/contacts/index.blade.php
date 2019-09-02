@@ -90,11 +90,10 @@
     </div>
 
     {{-- Contact Views --}}
-    {{-- @if (count($contacts)) --}}
+    @if (count($contacts))
     @foreach ($contacts as $contact)
 
     <div class="container">
-
     <div class="card">
         <div class="card-header-title is-size-1">
             <br>
@@ -105,12 +104,12 @@
             <p>
                 <a href="/contacts/{{ $contact->id }}">{{ $contact->name }}</a>
             </p>
-        <p>
-            {{ $contact->position }}
-        </p>
-        <p>
-            {{ $contact->phone }}
-        </p>
+            <p>
+                {{ $contact->position }}
+            </p>
+            <p>
+                {{ $contact->phone }}
+            </p>
         <div class="field is-grouped is-grouped-right">
             <div class="row">
                 <div class="col">
@@ -135,6 +134,8 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
     </div>
     <br>
 
@@ -179,7 +180,7 @@
                                 <div>
                                     <input type="text"
                                         class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
-                                        name="phone" placeholder="Phone" value="{{ $contact->phoneNumber }}">
+                                        name="phone" placeholder="Phone" value="{{ $contact->phone }}">
                                 </div>
                             </div>
 
@@ -285,9 +286,9 @@
             </div>
 
     @endforeach
-        {{-- @else
-        <p style="text-align: center;">No entries found</p>
-        @endif --}}
+        @else
+        <h3 style="text-align: center;">No entries found</h3>
+        @endif
 
     <p class="control">
         <button>

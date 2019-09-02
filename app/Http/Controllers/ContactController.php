@@ -62,16 +62,18 @@ class ContactController extends Controller
         }
 
         // Create Contact
-        $contact = new Contact();
+        $contact = new Contact;
 
-        $contact->name = request('name');
-        $contact->position = request('position');
-        $contact->phone = request('phone');
-        $contact->image = request('image');
-
+        $contact = new Contact;
+        $contact->name = $request->input('name');
+        $contact->position = $request->input('position');
+        // $contact->user_id = auth()->user()->id;
+        $contact->phone = $request->input('phone');
+        $contact->image = $fileNameToStore;
         $contact->save();
 
-        return redirect('/contacts')->with('success', 'Contact Created');
+        return redirect('/contacts');
+        // ->with('success', 'Contact Created');
     }
 
     /**
@@ -137,7 +139,7 @@ class ContactController extends Controller
 
         // dd($contacts);
         // return $contacts;
-        return view('contacts.search', ['contacts' => $contacts]);
-        // return view('contacts.search', compact('contacts'));
+        // return view('contacts.search', ['contacts' => $contacts]);
+        return view('contacts.search', compact('contacts'));
     }
 }

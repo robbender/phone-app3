@@ -28,7 +28,12 @@
                 max-width: 1000px;
                 margin: auto;
             }
-            
+
+            h1 {
+                margin-top: 50px;
+                text-align: center;
+            }
+
             </style>
 </head>
 <body>

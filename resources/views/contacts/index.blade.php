@@ -2,21 +2,29 @@
 
 @section('content')
 
-    <h1>Contacts</h1>
+<div class="container">
+
+    <h1>Phonebook Application</h1>
 
     {{-- Search form --}}
+
+    <div class="form-group row">
+    {{-- <div class="form-group col-md-6"> --}}
     <form action="/search" method="POST" role="search" class="fa fa-search form-control-feedback">
         @csrf
 
-    <div class="is-grouped is-pulled-right">
+    <div class="">
     <div class="field has-addons">
         <div class="control is-horizontal">
-          {{-- <input class="input is-large" type="search" placeholder="Find a contact" name="query"> --}}
           <input type="search" class="form-control" name="query" placeholder="Search" required>
         </div>
         <div class="control">
-          <button class="btn btn-success" type="submit" data-toggle="modal" data-target="#search">
-                <button class="btn btn-success" type="submit">
+          {{-- <button class="btn btn-success" type="submit" data-toggle="modal" data-target="#search"> --}}
+                <button
+                    class="btn btn-success"
+                    type="submit"
+                    data-toggle="modal"
+                    data-target="#search">
                 <span class="text"></span>
                 <span class="icon"><i class="fas fa-plus"></i></span>
           </button>
@@ -24,6 +32,10 @@
     </div>
     </div>
 </form>
+</div>
+</div>
+{{-- </div> --}}
+
 
 {{-- Search Alert Window --}}
 {{-- <div class="container">
@@ -53,7 +65,7 @@
     </div> --}}
 
 {{-- Search Modal --}}
-{{-- <div class="modal fade" id="search">
+<div class="modal fade" id="search">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -87,7 +99,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     {{-- Contact Views --}}
     @if (count($contacts))
@@ -198,8 +210,8 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                {{-- {{-- onclick="window.location.href = '/contacts'">Cancel</button> --}}
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                {{-- onclick="window.location.href = '/contacts'">Cancel</button> --}}
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
@@ -238,24 +250,31 @@
         <h3 style="text-align: center;">No entries found</h3>
         @endif
 
-    <p class="control">
+   <div>
+
+            <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#create">Add Contact
+           </button>
 
             {{-- <button
             type="submit"
             class="btn btn-primary"
             data-toggle="modal"
-            data-target="#create-{{ $contact->id }}">Add Contact</button> --}}
+            data-target="#create-{{ $contact->id }}">Add Contact</button>
 
         <button class="btn btn-primary"
                 type="submit"
                 data-toggle="modal"
-                data-target="#create-{{ $contact->id }}">New Contact</button>
-    </p>
+                data-target="#create-{{ $contact->id }}">New Contact</button> --}}
+    </div>
     <br>
     <br>
 
     {{-- Create modal --}}
-     <div class="modal fade" id="create-{{ $contact->id }}">
+<div class="modal fade" id="create">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -286,10 +305,10 @@
                                         <input type="text" class="input is-large {{ $errors->has('phone') ? 'is-danger' : '' }}" name="phone" value="{{ old('phone') }}" required>
                                     </div>
                                 </div>
-                                <div class="field"> --}}
+                                <div class="field">
                                         {{-- <label class="label is-large" type="text" name="image"></label> --}}
-                                        <input type="file" class="input is-large {{ $errors->has('image') ? 'is-danger' : '' }}"
-                                        name="image" enctype="multipart/form-data" accept="image/png, image/jpeg" placeholder="Image" required>
+                                        {{-- <input type="file" class="input is-large {{ $errors->has('image') ? 'is-danger' : '' }}"
+                                        name="image" enctype="multipart/form-data" accept="image/png, image/jpeg" placeholder="Image" required> --}}
                                 </div>
                                 <br>
                                 <div class="field">
@@ -309,7 +328,9 @@
                             </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Create</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            {{-- onclick="window.location.href = '/contacts'">Cancel</button> --}}
+                        {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
                     </div>
                 </div>
             </div>
@@ -338,13 +359,13 @@
         <br> --}}
 
 
-    <footer class="footer">
+    {{-- <footer class="footer">
             <div class="content has-text-centered">
               <p>
                 <strong>Directory</strong> by <a href="">Web Services</a>.
                 2019
               </p>
             </div>
-          </footer>
+          </footer> --}}
 
     @endsection

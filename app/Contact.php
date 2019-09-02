@@ -9,15 +9,12 @@ class Contact extends Model
 {
     use Notifiable;
 
-    // protected $fillable = [
-    //     'name',
-    //     'position',
-    //     'phone',
-    //     'image',
-    //     'user_id',
-    //     'description',
-    //     'completed'
-    // ];
+    protected $fillable = [
+        'name',
+        'position',
+        'phone',
+        'image'
+    ];
 
-    protected $guarded = [];
+    // protected $guarded = [];
 }

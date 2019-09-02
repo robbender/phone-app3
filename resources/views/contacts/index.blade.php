@@ -4,16 +4,6 @@
 
     <h1>Contacts</h1>
 
-    {{-- <span class="fa fa-search form-control-feedback"></span>
-                <input type="search" class="form-control" name="query" placeholder="Search" required>
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#demoModal">Show Modal</button>
-                    <button class="btn btn-success" type="button" data-toggle="modal" data-target="#search"></button>
-                        <span class="text"></span>
-                        <span class="icon"><i class="fas fa-plus"></i></span>
-                    </button>
-                </span> --}}
-
     {{-- Search form --}}
     <form action="/search" method="POST" role="search" class="fa fa-search form-control-feedback">
         @csrf
@@ -34,7 +24,6 @@
     </div>
     </div>
 </form>
-
 
 {{-- Search Alert Window --}}
 {{-- <div class="container">
@@ -101,7 +90,7 @@
     </div>
 
     {{-- Contact Views --}}
-
+    {{-- @if (count($contacts)) --}}
     @foreach ($contacts as $contact)
 
     <div class="container">
@@ -109,56 +98,48 @@
     <div class="card">
         <div class="card-header-title is-size-1">
             <br>
-
+            <div class="card-image">
+                {{-- <img style="width:50%" src="/storage/images/{{ $contact->image }}">
+               <img src="" alt="image"> --}}
+           </div>
             <p>
                 <a href="/contacts/{{ $contact->id }}">{{ $contact->name }}</a>
             </p>
-        </div>
-
-        <div class="card-image">
-             {{-- <img style="width:50%" src="/storage/images/{{ $contact->image }}"> --}}
-            <img src="" alt="">
-
-        </div>
-
-        <div class="card-content">
-
-        <p class="subtitle is-size-4 has-text-weight-semibold">
-            Position:
+        <p>
             {{ $contact->position }}
         </p>
-
-        <p class="subtitle is-size-4 has-text-weight-semibold">
-            Phone:
+        <p>
             {{ $contact->phone }}
         </p>
         <div class="field is-grouped is-grouped-right">
             <div class="row">
                 <div class="col">
-                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit">Edit</button>
+                     <button
+                     type="button"
+                     class="btn btn-primary"
+                     data-toggle="modal"
+                     data-target="#edit-{{ $contact->id }}">Edit
+                    </button>
+
                 </div>
             </div>
         </div>
-            <form method="POST" action="/contacts/{{ $contact->id }}">
-                @method('DELETE')
-                @csrf
-                <div class="field">
-                    <div class="control">
-                        <button type="submit" class="button is-danger is-medium">Delete</button>
-                    </div>
+        <div class="field is-grouped is-grouped-right">
+            <div class="row">
+                <div class="col">
+                    <button
+                    type="submit"
+                    class="button is-danger is-medium"
+                    data-toggle="modal"
+                    data-target="#delete-{{ $contact->id }}">Delete</button>
                 </div>
-            </form>
             </div>
         </div>
-    </div>
     </div>
     <br>
 
-    @endforeach
-
     {{-- Edit Modal --}}
-
-    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="editLabel"
+    <div class="modal fade" id="edit-{{ $contact->id }}" tabindex="-1" role="dialog" aria-labelledby="editLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -166,7 +147,7 @@
                         @method('PATCH')
                         @csrf
                         <div class="modal-header">
-                            <h5 class="modal-title" id="edit">Edit Contact</h5>
+                            <h5 class="modal-title" id="edit">Edit {{ $contact->name }}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -203,11 +184,6 @@
                             </div>
 
                             @if ($errors->any() && $errors->has($contact->id))
-                            {{-- <script>
-                            $(document).ready(function() {
-                                $('#edit-{{ $entry->id }}').modal('show');
-                            });
-                            </script> --}}
 
                             <div class="notification is-invalid">
                                 <ul>
@@ -282,32 +258,133 @@
             </div>
         </div> --}}
 
-    {{-- Demo modal --}}
-    <div class="modal fade" id="demoModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">Please confirm!</h2>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>This is the modal body, do you like it?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Confirm</button>
+        {{-- Delete Modal --}}
+        <div class="modal modal-danger fade" id="delete-{{ $contact->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="deleteLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form method="POST" action="/contacts/{{ $contact->id }}">
+                            @method('DELETE')
+                            @csrf
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteLabel">Delete entry</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you'd like to delete this entry?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <br>
+
+    @endforeach
+        {{-- @else
+        <p style="text-align: center;">No entries found</p>
+        @endif --}}
 
     <p class="control">
-        <a href="/users/create" class="button is-info is-pulled-right is-large">New Contact</a>
+        <button>
+            <a href="/users/create"
+                class="button is-info is-pulled-right is-large"
+                data-toggle="modal"
+                data-target="#create-{{ $contact->id }}">New Contact</a>
+        </button>
     </p>
     <br>
     <br>
+
+    {{-- Create modal --}}
+     <div class="modal fade" id="create-{{ $contact->id }}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Create New Contact</h2>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                            <h1 class="title is-size-1">Create New Contact</h1>
+                            <br>
+                            <form method="POST" action="/contacts">
+                                @csrf
+                                <div class="field">
+                                    <label class="label" for="name"></label>
+                                    <div class="control">
+                                    <input type="text" class="input is-large {{ $errors->has('name') ? 'is-danger' : '' }}" name="name" value="{{ old('name') }}" required>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                     <label class="label" type="text" name="position"></label>
+                                    <div class="control">
+                                        <input type="text" class="input is-large {{ $errors->has('position') ? 'is-danger' : '' }}" name="position" value="{{ old('position') }}" required>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label is-large" type="text" name="phone"></label>
+                                    <div class="control">
+                                        <input type="text" class="input is-large {{ $errors->has('phone') ? 'is-danger' : '' }}" name="phone" value="{{ old('phone') }}" required>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                        {{-- <label class="label is-large" type="text" name="image"></label> --}}
+                                        <input type="file" class="input is-large {{ $errors->has('image') ? 'is-danger' : '' }}"
+                                        name="image" enctype="multipart/form-data" accept="image/png, image/jpeg" placeholder="Image" required>
+                                </div>
+                                <br>
+                                <div class="field">
+                                    <div class="control">
+                                        <button type="submit" class="button is-info is-medium">Add User</button>
+                                    </div>
+                                </div>
+                                @if ($errors->any())
+                                <div class="notification is-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                @endif
+                            </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+     {{-- Demo modal --}}
+     {{-- <div class="modal fade" id="demoModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Please confirm!</h2>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>This is the modal body, do you like it?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br> --}}
+
+
     <footer class="footer">
             <div class="content has-text-centered">
               <p>

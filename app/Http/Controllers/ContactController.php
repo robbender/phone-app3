@@ -91,7 +91,7 @@ class ContactController extends Controller
     public function update(Request $request, Contact $contact)
     {
 
-        $contact = Contact::find($id);
+        $contact = Contact::find($contact->id);
         $contact->name = $request->input('name');
         $contact->position = $request->input('position');
         $contact->phone = $request->input('phone');

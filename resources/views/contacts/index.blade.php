@@ -10,7 +10,8 @@
 
     <div class="form-group row">
     {{-- <div class="form-group col-md-6"> --}}
-    <form action="/search" method="POST" role="search" class="fa fa-search form-control-feedback">
+    <form action="/search" method="POST" role="search" class="">
+        {{-- class="fa fa-search form-control-feedback" --}}
         @csrf
 
     <div class="">
@@ -26,7 +27,8 @@
                     data-toggle="modal"
                     data-target="#search">
                 <span class="text"></span>
-                <span class="icon"><i class="fas fa-plus"></i></span>
+                {{-- <span class="icon"><i class="fas fa-plus"></i></span> --}}
+                Search
           </button>
         </div>
     </div>
@@ -65,7 +67,7 @@
     {{-- </div> --}}
 
 {{-- Search Modal --}}
-{{-- <div class="modal fade" id="search">
+<div class="modal fade" id="search">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -99,10 +101,10 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     {{-- Contact Views --}}
-    @if (count($contacts))
+    {{-- @if (count($contacts)) --}}
     @foreach ($contacts as $contact)
 
     <div class="container">
@@ -194,7 +196,7 @@
                                     <label>Image</label>
                                     <input type="file"
                                         class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }} required"
-                                        name="image" enctype="multipart/form-data" accept=".jpg, .jpeg, .png" placeholder="Image" required>
+                                        name="image" enctype="multipart/form-data" accept=".jpg, .jpeg, .png" placeholder="Image">
                                 </div>
                             {{-- @if ($errors->any() && $errors->has($contact->id))
                             <div class="notification is-invalid">
@@ -242,9 +244,9 @@
             </div>
 
     @endforeach
-        @else
-        <h3 style="text-align: center;">Please Add Contacts</h3>
-        @endif
+        {{-- @else
+            <h3 style="text-align: center;">Please Add Contacts</h3>
+        @endif --}}
 
    <div>
             <button
@@ -253,17 +255,6 @@
             data-toggle="modal"
             data-target="#create">Add Contact
            </button>
-
-            {{-- <button
-            type="submit"
-            class="btn btn-primary"
-            data-toggle="modal"
-            data-target="#create-{{ $contact->id }}">Add Contact</button>
-
-        <button class="btn btn-primary"
-                type="submit"
-                data-toggle="modal"
-                data-target="#create-{{ $contact->id }}">New Contact</button> --}}
     </div>
     <br>
     <br>
@@ -348,13 +339,13 @@
         <br> --}}
 
 
-    {{-- <footer class="footer">
+    <footer class="footer">
             <div class="content has-text-centered">
               <p>
                 <strong>Directory</strong> by <a href="">Web Services</a>.
                 2019
               </p>
             </div>
-          </footer> --}}
+          </footer>
 
     @endsection

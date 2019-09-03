@@ -45,35 +45,18 @@ class ContactController extends Controller
     public function store(Request $request)
     {
 
-            // Handle File Upload
-        if ($request->hasFile('image')) {
-            // Get filename with the extension
-            $filenameWithExt = $request->file('image')->getClientOriginalName();
-            // Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just ext
-            $extension = $request->file('image')->getClientOriginalExtension();
-            // Filename to store
-            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-            // Upload Image
-            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
-        } else {
-            $fileNameToStore = 'noimage.jpg';
-        }
-
         // Create Contact
         $contact = new Contact;
 
-        $contact = new Contact;
         $contact->name = $request->input('name');
         $contact->position = $request->input('position');
-        // $contact->user_id = auth()->user()->id;
         $contact->phone = $request->input('phone');
-        $contact->image = $fileNameToStore;
+        // $contact->image = $request->file('image')->storeAs('images');
+
         $contact->save();
 
         return redirect('/contacts');
-        // ->with('success', 'Contact Created');
+
     }
 
     /**
@@ -108,6 +91,13 @@ class ContactController extends Controller
     public function update(Request $request, Contact $contact)
     {
 
+        $contact = Contact::find($id);
+        $contact->name = $request->input('name');
+        $contact->position = $request->input('position');
+        $contact->phone = $request->input('phone');
+
+        // $contact->save();
+
         $contact->update(request(['name', 'position', 'phone']));
 
         return redirect('/contacts');
@@ -121,6 +111,7 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
+
         $contact->delete();
 
         return redirect('/contacts');

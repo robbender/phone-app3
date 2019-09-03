@@ -41,7 +41,7 @@
 {{-- <div class="container">
         <div class="row">
             <div class="col">
-                <h1>Alerts &amp; Modal</h1>
+                <h1></h1>
             </div>
         </div>
         <div class="row">
@@ -56,16 +56,16 @@
                     </p>
                 </div>
             </div>
-        </div>
-        <div class="row">
+        </div> --}}
+        {{-- <div class="row">
             <div class="col">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#demoModal">Show Modal</button>
             </div>
-        </div>
-    </div> --}}
+        </div> --}}
+    {{-- </div> --}}
 
 {{-- Search Modal --}}
-<div class="modal fade" id="search">
+{{-- <div class="modal fade" id="search">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -99,7 +99,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- Contact Views --}}
     @if (count($contacts))
@@ -110,8 +110,7 @@
         <div class="card-header-title is-size-1">
             <br>
             <div class="card-image">
-                {{-- <img style="width:50%" src="/storage/images/{{ $contact->image }}">
-               <img src="" alt="image"> --}}
+                    <img style="width:10%" src="/storage/images/{{$contact->image}}">
            </div>
             <p>
                 <a href="/contacts/{{ $contact->id }}">{{ $contact->name }}</a>
@@ -168,36 +167,36 @@
                         <div class="modal-body">
                             <div class="field">
                                 <label for="name" class="label">Name</label>
-
                                 <div>
                                     <input type="text"
                                         class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                         name="name" placeholder="Name" value="{{ $contact->name }}" required>
                                 </div>
                             </div>
-
                             <div class="field">
                                 <label for="title" class="label">Position</label>
-
                                 <div>
                                     <input type="text"
                                         class="form-control {{ $errors->has('position') ? 'is-invalid' : '' }}"
                                         name="position" placeholder="Position" value="{{ $contact->position }}" required>
                                 </div>
                             </div>
-
                             <div class="field">
                                 <label for="phone" class="label">Phone</label>
-
                                 <div>
                                     <input type="text"
                                         class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
                                         name="phone" placeholder="Phone" value="{{ $contact->phone }}">
                                 </div>
                             </div>
-
-                            @if ($errors->any() && $errors->has($contact->id))
-
+                            <div class="">
+                                    <br>
+                                    <label>Image</label>
+                                    <input type="file"
+                                        class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }} required"
+                                        name="image" enctype="multipart/form-data" accept=".jpg, .jpeg, .png" placeholder="Image" required>
+                                </div>
+                            {{-- @if ($errors->any() && $errors->has($contact->id))
                             <div class="notification is-invalid">
                                 <ul>
                                     @foreach($errors->all() as $error)
@@ -205,13 +204,10 @@
                                     @endforeach
                                 </ul>
                             </div>
-                            @endif
-
+                            @endif --}}
                         </div>
-
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                {{-- onclick="window.location.href = '/contacts'">Cancel</button> --}}
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
@@ -247,11 +243,10 @@
 
     @endforeach
         @else
-        <h3 style="text-align: center;">No entries found</h3>
+        <h3 style="text-align: center;">Please Add Contacts</h3>
         @endif
 
    <div>
-
             <button
             type="button"
             class="btn btn-primary"
@@ -305,33 +300,26 @@
                                         <input type="text" class="input is-large {{ $errors->has('phone') ? 'is-danger' : '' }}" name="phone" required>
                                     </div>
                                 </div>
-                                <div class="field">
-                                        {{-- <label class="label is-large" type="text" name="image"></label> --}}
-                                        {{-- <input type="file" class="input is-large {{ $errors->has('image') ? 'is-danger' : '' }}"
-                                        name="image" enctype="multipart/form-data" accept="image/png, image/jpeg" placeholder="Image" required> --}}
-                                </div>
+                                <div class="">
+                                        <br>
+                                        <label>Image</label>
+                                        <input type="file"
+                                            class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }} required"
+                                            name="image" enctype="multipart/form-data" accept=".jpg, .jpeg, .png" placeholder="Image" required>
+                                    </div>
                                 <br>
 
-                                @if ($errors->any())
-                                <div class="notification is-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                @endif
-                            </form>
-                    </div>
-                    <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            {{-- onclick="window.location.href = '/contacts'">Cancel</button> --}}
-                            <div class="field">
+                                <div class="field">
                                     <div class="control">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                         <button type="submit" class="btn btn-primary">Add User</button>
                                     </div>
                                 </div>
-                        {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
+                            </form>
+                    </div>
+                    <div class="modal-footer">
+                            {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add User</button> --}}
                     </div>
                 </div>
             </div>

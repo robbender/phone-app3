@@ -198,15 +198,6 @@
                                         class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }} required"
                                         name="image" enctype="multipart/form-data" accept=".jpg, .jpeg, .png" placeholder="Image">
                                 </div>
-                            {{-- @if ($errors->any() && $errors->has($contact->id))
-                            <div class="notification is-invalid">
-                                <ul>
-                                    @foreach($errors->all() as $error)
-                                    <li class="text-danger">{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                            @endif --}}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

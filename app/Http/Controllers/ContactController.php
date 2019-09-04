@@ -45,12 +45,28 @@ class ContactController extends Controller
     public function store(Request $request)
     {
 
+        // Handle File Upload
+        if($request->hasFile('image')) {
+            // Get filename with extension
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+           // Get just ext
+            $extension = $request->file('image')->getClientOriginalExtension();
+            //Filename to store
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+          // Upload Image
+            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
         // Create Contact
         $contact = new Contact;
 
         $contact->name = $request->input('name');
         $contact->position = $request->input('position');
         $contact->phone = $request->input('phone');
+        $contact->image = $fileNameToStore;
         // $contact->image = $request->file('image')->storeAs('images');
 
         $contact->save();

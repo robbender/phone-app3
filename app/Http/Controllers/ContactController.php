@@ -44,9 +44,11 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+        // return ($request);
 
         // Handle File Upload
         if($request->hasFile('image')) {
+            // dd('testing ');
             // Get filename with extension
             $filenameWithExt = $request->file('image')->getClientOriginalName();
             // Get just filename
@@ -56,10 +58,12 @@ class ContactController extends Controller
             //Filename to store
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
           // Upload Image
-            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+            $contact = $request->file('image')->storeAs('/public/images', $fileNameToStore);
         } else {
+            // dd('testing for no image');
             $fileNameToStore = 'noimage.jpg';
         }
+
         // Create Contact
         $contact = new Contact;
 
@@ -67,7 +71,7 @@ class ContactController extends Controller
         $contact->position = $request->input('position');
         $contact->phone = $request->input('phone');
         $contact->image = $fileNameToStore;
-        // $contact->image = $request->file('image')->storeAs('images');
+        // $contact->image = $request->file('image')->store('images');
 
         $contact->save();
 
@@ -112,7 +116,25 @@ class ContactController extends Controller
         $contact->position = $request->input('position');
         $contact->phone = $request->input('phone');
 
-        // $contact->save();
+        // return ($request);
+
+        // Handle File Upload
+        if($request->hasFile('image')) {
+            // dd('testing ');
+            // Get filename with extension
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+           // Get just ext
+            $extension = $request->file('image')->getClientOriginalExtension();
+            //Filename to store
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+          // Upload Image
+            $contact = $request->file('image')->storeAs('/public/images', $fileNameToStore);
+        } else {
+            // dd('testing for no image');
+            $fileNameToStore = 'noimage.jpg';
+        }
 
         $contact->update(request(['name', 'position', 'phone']));
 
@@ -127,6 +149,11 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
+
+        if($contact->image != 'noimage.jpg'){
+            // Delete Image
+            Storage::delete('public/images/'.$contact->image);
+        }
 
         $contact->delete();
 

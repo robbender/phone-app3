@@ -3,41 +3,59 @@
 @section('content')
 
 <div class="container">
-
+    <br>
     <h1>Phonebook Application</h1>
-
+    <br>
     {{-- Search form --}}
-
     <div class="form-group row">
-    {{-- <div class="form-group col-md-6"> --}}
-    <form action="/search" method="POST" role="search" class="">
-        {{-- class="fa fa-search form-control-feedback" --}}
+    <div class="form-group col">
+    <form action="/search" method="POST" role="search" class="class="fa fa-search form-control-feedback"">
         @csrf
 
     <div class="">
     <div class="field has-addons">
         <div class="control is-horizontal">
-          <input type="search" class="form-control" name="query" placeholder="Search" required>
-        </div>
-        <div class="control">
-          {{-- <button class="btn btn-success" type="submit" data-toggle="modal" data-target="#search"> --}}
-                <button
+          {{-- <input type="search" class="form-control" name="query" placeholder="Search" required> --}}
+          <div>
+                <div class="input-group">
+                    <input type="search" class="form-control" name="query" placeholder="Search" required class="fa fa-search form-control-feedback">
+                    {{-- <span class="fa fa-search form-control-feedback"></span> --}}
+                    <button
+                        class="btn btn-success"
+                        type="submit"
+                        data-toggle="modal"
+                        data-target="#search">
+                        <span class="input-group-addon"></span>
+                        <span class="icon"><i class="fas fa-plus"></i></span>
+                    </button>
+
+                </div>
+            </div>
+                {{-- <button
                     class="btn btn-success"
+                    id="searchBtn"
                     type="submit"
                     data-toggle="modal"
                     data-target="#search">
                 <span class="text"></span>
-                {{-- <span class="icon"><i class="fas fa-plus"></i></span> --}}
-                Search
-          </button>
+                    <span class="input-group-addon"></span>
+                    <span class="icon"><i class="fas fa-plus"></i></span>
+                </button> --}}
+
+        </div>
+        <div class="">
+          {{-- <button class="btn btn-success" type="submit" data-toggle="modal" data-target="#search"> --}}
+
         </div>
     </div>
     </div>
 </form>
 </div>
 </div>
-{{-- </div> --}}
-
+</div>
+<br>
+<br>
+<br>
 
 {{-- Search Alert Window --}}
 {{-- <div class="container">
@@ -104,52 +122,49 @@
     </div>
 
     {{-- Contact Views --}}
-    {{-- @if (count($contacts)) --}}
+    @if (count($contacts))
     @foreach ($contacts as $contact)
 
     <div class="container">
-    <div class="card">
-        <div class="card-header-title is-size-1">
-            <br>
-            <div class="card-image">
-                    <img style="width:10%" src="/storage/images/{{$contact->image}}">
-           </div>
-            <p>
-                <a href="/contacts/{{ $contact->id }}">{{ $contact->name }}</a>
-            </p>
-            <p>
-                {{ $contact->position }}
-            </p>
-            <p>
-                {{ $contact->phone }}
-            </p>
-        <div class="field is-grouped is-grouped-right">
             <div class="row">
-                <div class="col">
-                     <button
-                     type="button"
-                     class="btn btn-primary"
-                     data-toggle="modal"
-                     data-target="#edit-{{ $contact->id }}">Edit
-                    </button>
-
+                <div class="col-3">
+                    <img style="width:100%" src="/storage/images/{{$contact->image}}">
+                </div>
+                <div class="col-6">
+                    <p>
+                        <a href="/contacts/{{ $contact->id }}">{{ $contact->name }}</a>
+                    </p>
+                    <p>
+                        {{ $contact->position }}
+                    </p>
+                    <p>
+                        {{ $contact->phone }}
+                    </p>
+                </div>
+                <div class="col-3">
+                    <div class="btn-group-vertical">
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#edit-{{ $contact->id }}">Edit
+                        </button>
+                        <br>
+                        <button
+                            type="submit"
+                            class="btn btn-danger"
+                            data-toggle="modal"
+                            data-target="#delete-{{ $contact->id }}">Delete
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="field is-grouped is-grouped-right">
-            <div class="row">
-                <div class="col">
-                    <button
-                    type="submit"
-                    class="btn btn-danger"
-                    data-toggle="modal"
-                    data-target="#delete-{{ $contact->id }}">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-    </div>
+        <hr>
+    <br>
+    <br>
+    <br>
+    <br>
     <br>
 
     {{-- Edit Modal --}}
@@ -235,17 +250,35 @@
             </div>
 
     @endforeach
-        {{-- @else
+        @else
             <h3 style="text-align: center;">Please Add Contacts</h3>
-        @endif --}}
+        @endif
 
-   <div>
-            <button
-            type="button"
-            class="btn btn-primary"
-            data-toggle="modal"
-            data-target="#create">Add Contact
-           </button>
+   <div class="container">
+       <div class="row">
+           <div class="col text-center">
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-toggle="modal"
+                    data-target="#create">Add Contact
+                </button>
+           </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="row">
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>
+                    <strong>Directory</strong> by <a href="">Web Services</a>.
+                    2019
+                    </p>
+                </div>
+            </footer>
+        </div>
     </div>
     <br>
     <br>
@@ -329,14 +362,5 @@
         </div>
         <br> --}}
 
-
-    <footer class="footer">
-            <div class="content has-text-centered">
-              <p>
-                <strong>Directory</strong> by <a href="">Web Services</a>.
-                2019
-              </p>
-            </div>
-          </footer>
 
     @endsection

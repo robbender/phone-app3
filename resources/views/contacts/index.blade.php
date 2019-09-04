@@ -191,13 +191,22 @@
                                         name="phone" placeholder="Phone" value="{{ $contact->phone }}">
                                 </div>
                             </div>
-                            <div class="">
+
+                            {{-- <h6>Image upload</h6>
+                                {!! Form::open(['action' => 'ContactController@store', 'method' => 'POST', 'enctype'=>'multipart/form-data']) !!}
+                                    @method('PATCH')
+                                    @csrf
+                                    <div class="form-group">
+                                        {{Form::file('cover_image')}}
+                                    </div>
+                                {!! Form::close() !!} --}}
+                            {{-- <div class="">
                                     <br>
                                     <label>Image</label>
                                     <input type="file"
                                         class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }} required"
                                         name="image" enctype="multipart/form-data" accept=".jpg, .jpeg, .png" placeholder="Image">
-                                </div>
+                                </div> --}}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

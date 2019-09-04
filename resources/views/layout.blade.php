@@ -19,22 +19,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
     </script>
-    <style>
-            * {
-                box-sizing: border-box;
-            }
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
-            .container {
-                max-width: 1000px;
-                margin: auto;
-            }
-
-            h1 {
-                margin-top: 50px;
-                text-align: center;
-            }
-
-            </style>
 </head>
 <body>
 

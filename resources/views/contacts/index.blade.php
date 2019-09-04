@@ -131,15 +131,15 @@
                     <img style="width:100%" src="/storage/images/{{$contact->image}}">
                 </div>
                 <div class="col-6">
-                    <p>
+                    <h3>
                         <a href="/contacts/{{ $contact->id }}">{{ $contact->name }}</a>
-                    </p>
-                    <p>
+                    </h3>
+                    <h5>
                         {{ $contact->position }}
-                    </p>
-                    <p>
+                    </h5>
+                    <h2>
                         {{ $contact->phone }}
-                    </p>
+                    </h2>
                 </div>
                 <div class="col-3">
                     <div class="btn-group-vertical">
